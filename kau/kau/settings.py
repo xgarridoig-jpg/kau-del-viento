@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "dashboard",
     "cart",
     "products", 
+     "orders",
 ]
 
 MIDDLEWARE = [
@@ -57,7 +58,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'kau.urls'
 
-from pathlib import Path
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 

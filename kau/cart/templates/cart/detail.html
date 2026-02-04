@@ -34,6 +34,8 @@
   </table>
 
   <p><strong>Total:</strong> ${{ cart.total_price }}</p>
+  <a href="{% url 'orders:checkout' %}">Ir a checkout</a>
+
 
   <a href="{% url 'cart:clear' %}">Vaciar carrito</a>
 {% else %}
