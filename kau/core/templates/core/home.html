@@ -1,8 +1,110 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}Inicio{% endblock %}
+{% block title %}
+Kau del Viento | Refugio Patagónico
+{% endblock %}
 
 {% block content %}
-<h1>Kau del Viento</h1>
-<p>Proyecto en construcción.</p>
+
+<!-- HERO -->
+<header class="hero" id="inicio">
+  <div class="hero-content">
+    <h1>Kau del Viento</h1>
+
+    <div class="hero-box">
+      <p>
+        Donde la estepa respira<br />
+        y la naturaleza encuentra su hogar.
+      </p>
+      <p class="hero-sub">
+        Decoración, flora nativa y artesanía austral.
+      </p>
+      <a href="#coleccion" class="btn-main">Explorar colección</a>
+    </div>
+  </div>
+</header>
+
+<!-- COLECCIÓN -->
+<section class="container" id="coleccion">
+  <div class="section-header">
+    <h2>Tesoros de la Estepa</h2>
+    <p>Piezas únicas inspiradas en la cultura Aonikenk y el paisaje austral.</p>
+  </div>
+
+  <div class="grid">
+    {% for producto in productos %}
+    <div class="card">
+      <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+
+      <div class="card-body">
+        <span class="category">
+          {{ producto.get_categoria_display }}
+        </span>
+
+        <h3>{{ producto.nombre }}</h3>
+
+        <span class="price">
+          ${{ producto.precio }}
+        </span>
+
+        <form method="post" action="{% url 'cart:add' %}">
+          {% csrf_token %}
+          <input type="hidden" name="product_id" value="{{ producto.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button type="submit" class="btn-add">
+            Agregar al Kau
+          </button>
+        </form>
+      </div>
+    </div>
+    {% empty %}
+      <p>No hay productos disponibles.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- HISTORIA -->
+<section class="historia-kau" id="nosotros">
+  <div class="historia-wrapper">
+
+    <span class="historia-eyebrow">Nuestra raíz</span>
+    <h2>El Espíritu del Kau</h2>
+
+    <p class="historia-intro">
+      Un refugio nacido del viento.
+    </p>
+
+    <div class="historia-texto">
+      <p>
+        En la lengua Aonikenk, <strong>“Kau”</strong> significa casa, toldo o paradero.
+        No es solo un lugar físico, sino un gesto: detenerse, protegerse,
+        habitar con sentido.
+      </p>
+
+      <p>
+        Kau del Viento nace en la estepa patagónica, donde el paisaje es amplio,
+        el clima exige respeto y cada objeto debe tener propósito.
+        Aquí el tiempo avanza lento, como el tejido de la lana
+        o el secado natural de la flora.
+      </p>
+
+      <p>
+        Cada pieza es una extensión del territorio:
+        madera que conserva su veta,
+        fibras que abrigan,
+        ramas y flores que no se imponen,
+        solo acompañan.
+      </p>
+    </div>
+
+    <ul class="historia-valores">
+      <li><strong>Refugio</strong><span>Objetos que abrigan el habitar</span></li>
+      <li><strong>Origen</strong><span>Materiales nobles y locales</span></li>
+      <li><strong>Calma</strong><span>Belleza sin exceso</span></li>
+    </ul>
+
+  </div>
+</section>
+
 {% endblock %}

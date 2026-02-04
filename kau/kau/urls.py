@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django.shortcuts import render
 from dashboard.views import dashboard_403
 
+
 def error_403_view(request, exception=None):
     return render(request, "403.html", status=403)
 
