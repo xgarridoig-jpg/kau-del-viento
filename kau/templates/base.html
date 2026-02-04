@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Kau del Viento{% endblock %}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+
+<header>
+    <nav>
+        <a href="{% url 'core:home' %}">Kau del Viento</a>
+
+        <ul>
+            {% if user.is_authenticated %}
+                {% if user.is_staff %}
+                    <li><a href="{% url 'dashboard:admin_home' %}">Dashboard Admin</a></li>
+                {% else %}
+                    <li><a href="{% url 'dashboard:user_home' %}">Mi Dashboard</a></li>
+                {% endif %}
+                <li><a href="{% url 'accounts:logout' %}">Salir</a></li>
+            {% else %}
+                <li><a href="{% url 'accounts:login' %}">Ingresar</a></li>
+                <li><a href="{% url 'accounts:signup' %}">Registrarse</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+
+<main>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="message {{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    <p>&copy; {% now "Y" %} Kau del Viento</p>
+</footer>
+
+</body>
+</html>
