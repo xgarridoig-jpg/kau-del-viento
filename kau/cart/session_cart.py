@@ -1,3 +1,6 @@
+from products.models import Producto
+
+
 class Cart:
     SESSION_KEY = "cart"
 
@@ -29,11 +32,28 @@ class Cart:
         self.session.modified = True
 
     def __iter__(self):
-        for product_id, quantity in self.cart.items():
+        product_ids = self.cart.keys()
+        productos = Producto.objects.filter(id__in=product_ids)
+
+        for producto in productos:
+            quantity = self.cart[str(producto.id)]
+            subtotal = producto.precio * quantity
+
             yield {
-                "product_id": product_id,
+                "producto": producto,
                 "quantity": quantity,
+                "subtotal": subtotal,
             }
 
     def total_items(self):
         return sum(self.cart.values())
+
+    def total_price(self):
+        total = 0
+        product_ids = self.cart.keys()
+        productos = Producto.objects.filter(id__in=product_ids)
+
+        for producto in productos:
+            total += producto.precio * self.cart[str(producto.id)]
+
+        return total

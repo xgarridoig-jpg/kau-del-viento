@@ -6,23 +6,37 @@
 <h1>Carrito</h1>
 
 {% if cart.total_items %}
-    <ul>
-        {% for item in cart %}
-            <li>
-                Producto ID: {{ item.product_id }} —
-                Cantidad: {{ item.quantity }}
+  <table>
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Subtotal</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart %}
+        <tr>
+          <td>{{ item.producto.nombre }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>${{ item.subtotal }}</td>
+          <td>
+            <form method="post" action="{% url 'cart:remove' %}">
+              {% csrf_token %}
+              <input type="hidden" name="product_id" value="{{ item.producto.id }}">
+              <button type="submit">Quitar</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
-                <form method="post" action="{% url 'cart:remove' %}" style="display:inline">
-                    {% csrf_token %}
-                    <input type="hidden" name="product_id" value="{{ item.product_id }}">
-                    <button type="submit">Quitar</button>
-                </form>
-            </li>
-        {% endfor %}
-    </ul>
+  <p><strong>Total:</strong> ${{ cart.total_price }}</p>
 
-    <a href="{% url 'cart:clear' %}">Vaciar carrito</a>
+  <a href="{% url 'cart:clear' %}">Vaciar carrito</a>
 {% else %}
-    <p>Tu carrito está vacío.</p>
+  <p>Tu carrito está vacío.</p>
 {% endif %}
 {% endblock %}
