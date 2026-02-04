@@ -16,6 +16,7 @@
         <a href="{% url 'core:home' %}">Kau del Viento</a>
 
         <ul>
+            <li><a href="{% url 'core:contacto' %}">Contacto</a></li>
             {% if user.is_authenticated %}
                 {% if user.is_staff %}
                     <li><a href="{% url 'dashboard:admin_home' %}">Dashboard Admin</a></li>
