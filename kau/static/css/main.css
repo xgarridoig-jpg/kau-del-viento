@@ -816,6 +816,29 @@ nav a:active {
   font-size: 0.85rem;
   letter-spacing: 1.5px;
 }
+.messages {
+  list-style: none;
+  padding: 1rem 2rem;
+  margin: 0;
+}
+
+.message {
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  font-family: "Lato", sans-serif;
+}
+
+.message.success {
+  background-color: #e6f4ea;
+  color: #2e7d32;
+  border: 1px solid #b7dfc2;
+}
+
+.message.error {
+  background-color: #fdecea;
+  color: #b71c1c;
+}
 
 
 /* ======================================================

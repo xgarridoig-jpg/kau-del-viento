@@ -30,6 +30,11 @@ def signup_view(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save()
+            messages.success(
+                request,
+                "Tu refugio fue creado con éxito. Bienvenida/o a Kau del Viento.",
+            )
+
             return redirect("accounts:login")
     else:
         form = SignupForm()
