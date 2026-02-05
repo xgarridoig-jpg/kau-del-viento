@@ -17,7 +17,7 @@ def contacto(request):
             form.save()
             messages.success(
                 request,
-                "Gracias por contactarnos. Te responderemos pronto."
+                 "Gracias por escribirnos 🌿 Tu mensaje fue enviado correctamente."
             )
             return redirect("core:contacto")
     else:

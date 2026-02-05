@@ -1,8 +1,38 @@
 {% extends "base.html" %}
 
-{% block title %}Dashboard Admin{% endblock %}
+{% block title %}Panel Admin | Kau del Viento{% endblock %}
 
 {% block content %}
-<h1>Dashboard Administrador</h1>
-<p>Área exclusiva para administradores.</p>
+<section class="container">
+  <div class="section-header">
+    <h2>Panel de Administración</h2>
+    <p>Gestión general de Kau del Viento</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-body">
+        <h3>Usuarios</h3>
+        <p>Administrar cuentas, permisos y accesos.</p>
+        <a href="/admin/auth/user/" class="btn-main">Ver usuarios</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h3>Mensajes</h3>
+        <p>Consultas recibidas desde el formulario de contacto.</p>
+        <a href="/admin/core/consultacontacto/" class="btn-main">Ver mensajes</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h3>Contenido</h3>
+        <p>Gestiona productos, textos e imágenes.</p>
+        <a href="/admin/" class="btn-main">Ir al admin</a>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}

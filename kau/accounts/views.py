@@ -15,7 +15,6 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            messages.success(request, "Has iniciado sesión correctamente.")
             return redirect_by_role(user)
     else:
         form = LoginForm(request)
@@ -31,7 +30,6 @@ def signup_view(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save()
-            messages.success(request, "Cuenta creada correctamente. Ya puedes ingresar.")
             return redirect("accounts:login")
     else:
         form = SignupForm()
@@ -42,7 +40,6 @@ def signup_view(request):
 @login_required
 def logout_view(request):
     logout(request)
-    messages.info(request, "Sesión cerrada.")
     return redirect("core:home")
 
 

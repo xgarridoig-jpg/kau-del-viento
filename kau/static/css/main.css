@@ -676,6 +676,38 @@ nav a:active {
   color: var(--rust-red);
   letter-spacing: 1px;
 }
+/* ===============================
+   MENSAJES DEL SISTEMA
+================================ */
+.flash-messages {
+  margin-top: 1.5rem;
+}
+
+.alert {
+  padding: 16px 22px;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  background-color: #e9f4ee;
+  border-left: 4px solid #6b705c;
+  color: #3f3328;
+  box-shadow: 0 6px 18px rgba(63, 51, 40, 0.08);
+}
+
+.alert-success {
+  background-color: #e9f4ee;
+  border-left-color: #6b705c;
+}
+
+.alert-error,
+.alert-danger {
+  background-color: #f8e6e3;
+  border-left-color: #8b4036;
+}
+
+.alert-warning {
+  background-color: #fff4dc;
+  border-left-color: #c2a878;
+}
 
 
 /* ======================================================

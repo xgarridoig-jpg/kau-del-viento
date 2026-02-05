@@ -1,8 +1,38 @@
 {% extends "base.html" %}
 
-{% block title %}Dashboard Usuario{% endblock %}
+{% block title %}Mi Refugio | Kau del Viento{% endblock %}
 
 {% block content %}
-<h1>Dashboard Usuario</h1>
-<p>Área privada del usuario.</p>
+<section class="container">
+  <div class="section-header">
+    <h2>Bienvenida, {{ request.user.username }}</h2>
+    <p>Este es tu refugio dentro de Kau del Viento</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-body">
+        <h3>Mis datos</h3>
+        <p>Revisa la información de tu cuenta.</p>
+        <button class="btn-main" disabled>Próximamente</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h3>Mis intereses</h3>
+        <p>Productos y piezas que te inspiran.</p>
+        <button class="btn-main" disabled>Próximamente</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h3>Contacto</h3>
+        <p>¿Tienes una idea o buscas algo especial?</p>
+        <a href="{% url 'core:contacto' %}" class="btn-main">Escríbenos</a>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}

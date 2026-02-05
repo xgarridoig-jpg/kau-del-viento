@@ -5,6 +5,7 @@
     <title>{% block title %}Kau del Viento{% endblock %}</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,7 +17,9 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/main.css' %}" />
   </head>
+
   <body>
+    <!-- NAVBAR -->
     <header>
       <nav>
         <div class="logo">
@@ -28,18 +31,22 @@
           <li><a href="{% url 'core:home' %}#nosotros">Historia</a></li>
           <li><a href="{% url 'core:contacto' %}">Contacto</a></li>
 
-          {% if user.is_authenticated %} {% if user.is_staff %}
-          <li><a href="{% url 'dashboard:admin_home' %}">Dashboard</a></li>
-          {% endif %}
-          <li>
-            <form method="post" action="{% url 'accounts:logout' %}">
-              {% csrf_token %}
-              <button type="submit" class="nav-link-btn">Salir</button>
-            </form>
-          </li>
+          {% if user.is_authenticated %}
+            {% if user.is_staff %}
+              <li>
+                <a href="{% url 'dashboard:admin_home' %}">Dashboard</a>
+              </li>
+            {% endif %}
+
+            <li>
+              <form method="post" action="{% url 'accounts:logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="nav-link-btn">Salir</button>
+              </form>
+            </li>
           {% else %}
-          <li><a href="{% url 'accounts:login' %}">Ingresar</a></li>
-          <li><a href="{% url 'accounts:signup' %}">Registrarse</a></li>
+            <li><a href="{% url 'accounts:login' %}">Ingresar</a></li>
+            <li><a href="{% url 'accounts:signup' %}">Registrarse</a></li>
           {% endif %}
 
           <li>
@@ -51,16 +58,25 @@
       </nav>
     </header>
 
-    <main>
-      {% if messages %}
-      <ul class="messages">
+    <!-- MENSAJES DEL SISTEMA -->
+    {% if messages %}
+    <section class="flash-messages">
+      <div class="container">
         {% for message in messages %}
-        <li class="message {{ message.tags }}">{{ message }}</li>
+          <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+          </div>
         {% endfor %}
-      </ul>
-      {% endif %} {% block content %}{% endblock %}
+      </div>
+    </section>
+    {% endif %}
+
+    <!-- CONTENIDO -->
+    <main>
+      {% block content %}{% endblock %}
     </main>
 
+    <!-- FOOTER -->
     <footer class="site-footer">
       <div class="footer-inner">
         <p class="footer-brand">
@@ -71,11 +87,13 @@
           Refugio patagónico · Decoración · Flora nativa · Artesanía austral
         </p>
 
-        <p class="footer-copy">© {{ now|date:"Y" }} Kau del Viento</p>
+        <p class="footer-copy">
+          © {% now "Y" %} Kau del Viento
+        </p>
       </div>
     </footer>
 
-    <script src="{% static 'js/cart.js' %}"></script>
+    <!-- SIDE CART -->
     <div id="side-cart" class="side-cart">
       <div class="side-cart-header">
         <h3>Tu Kau</h3>
@@ -88,7 +106,8 @@
     </div>
 
     <div id="cart-overlay"></div>
-    {% load static %}
+
+    <!-- JS -->
     <script src="{% static 'js/cart.js' %}"></script>
   </body>
 </html>
