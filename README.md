@@ -105,13 +105,8 @@ Visita la aplicación en:
 A continuación se presentan las capturas de pantalla que validan los requerimientos de la rúbrica.
 
 ### 1. Registro de Usuario
-*Evidencia del formulario de registro y validación de datos.*
-
-![alt text](image.png)
-
+*Evidencia del formulario de registro y validación de datos
 ![alt text](image-1.png)
-
-![alt text](image-2.png)
 ---
 
 ### 2. Inicio de Sesión (Login)
