@@ -3,25 +3,22 @@ from products.models import Producto
 
 
 class Cart:
-    SESSION_KEY = "cart"
-
     def __init__(self, request):
         self.session = request.session
-        cart = self.session.get(self.SESSION_KEY)
+        cart = self.session.get("cart")
 
         if not cart:
-            cart = self.session[self.SESSION_KEY] = {}
+            cart = self.session["cart"] = {}
 
         self.cart = cart
 
-    def add(self, product_id, quantity=1):
-        product_id = str(product_id)
-        producto = Producto.objects.get(id=product_id)
+    def add(self, product, quantity=1):
+        product_id = str(product.id)
 
         if product_id not in self.cart:
             self.cart[product_id] = {
                 "quantity": 0,
-                "price": str(producto.precio),
+                "price": str(product.precio),
             }
 
         self.cart[product_id]["quantity"] += int(quantity)
@@ -41,33 +38,28 @@ class Cart:
             del self.cart[product_id]
             self.save()
 
-    def clear(self):
-        self.session[self.SESSION_KEY] = {}
-        self.save()
-
     def save(self):
         self.session.modified = True
 
     def __iter__(self):
         product_ids = self.cart.keys()
-        productos = Producto.objects.filter(id__in=product_ids)
+        products = Producto.objects.filter(id__in=product_ids)
 
-        for producto in productos:
-            item = self.cart[str(producto.id)]
-            price = Decimal(item["price"])
-            quantity = item["quantity"]
+        for product in products:
+            item = self.cart[str(product.id)]
+            item["product"] = product
+            item["price"] = Decimal(item["price"])
+            item["total_price"] = item["price"] * item["quantity"]
+            yield item
 
-            yield {
-                "producto": producto,
-                "quantity": quantity,
-                "price": price,
-                "total_price": price * quantity,
-            }
-
-    def total_items(self):
+    def __len__(self):
         return sum(item["quantity"] for item in self.cart.values())
 
-    def total_price(self):
+    @property
+    def total_items(self):
+        return len(self)
+
+    def get_total_price(self):
         return sum(
             Decimal(item["price"]) * item["quantity"]
             for item in self.cart.values()

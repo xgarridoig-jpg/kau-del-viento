@@ -1,58 +1,94 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>{% block title %}Kau del Viento{% endblock %}</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
 
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-</head>
-<body>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">
+          <a href="{% url 'core:home' %}">Kau del Viento</a>
+        </div>
 
-<header>
-    <nav>
-        <a href="{% url 'core:home' %}">Kau del Viento</a>
+        <ul class="nav-links">
+          <li><a href="{% url 'core:home' %}#coleccion">Colección</a></li>
+          <li><a href="{% url 'core:home' %}#nosotros">Historia</a></li>
+          <li><a href="{% url 'core:contacto' %}">Contacto</a></li>
 
-        <ul>
-            <li><a href="{% url 'core:contacto' %}">Contacto</a></li>
-            {% if user.is_authenticated %}
-                {% if user.is_staff %}
-                    <li><a href="{% url 'dashboard:admin_home' %}">Dashboard Admin</a></li>
-                {% else %}
-                    <li><a href="{% url 'dashboard:user_home' %}">Mi Dashboard</a></li>
-                {% endif %}
-                <li><a href="{% url 'accounts:logout' %}">Salir</a></li>
-            {% else %}
-                <li><a href="{% url 'accounts:login' %}">Ingresar</a></li>
-                <li><a href="{% url 'accounts:signup' %}">Registrarse</a></li>
-            {% endif %}
+          {% if user.is_authenticated %} {% if user.is_staff %}
+          <li><a href="{% url 'dashboard:admin_home' %}">Dashboard</a></li>
+          {% endif %}
+          <li>
+            <form method="post" action="{% url 'accounts:logout' %}">
+              {% csrf_token %}
+              <button type="submit" class="nav-link-btn">Salir</button>
+            </form>
+          </li>
+          {% else %}
+          <li><a href="{% url 'accounts:login' %}">Ingresar</a></li>
+          <li><a href="{% url 'accounts:signup' %}">Registrarse</a></li>
+          {% endif %}
+
+          <li>
+            <a href="{% url 'cart:detail' %}">
+              Carrito (<span id="cart-count">{{ cart.total_items }}</span>)
+            </a>
+          </li>
         </ul>
-        <div class="cart-summary">
-  <a href="{% url 'cart:detail' %}">
-    Carrito ({{ cart.total_items }})
-  </a>
-</div>
+      </nav>
+    </header>
 
-    </nav>
-</header>
+    <main>
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li class="message {{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %} {% block content %}{% endblock %}
+    </main>
 
-<main>
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li class="message {{ message.tags }}">{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p class="footer-brand">
+          <strong>Kau del Viento</strong>
+        </p>
 
-    {% block content %}{% endblock %}
-</main>
+        <p class="footer-text">
+          Refugio patagónico · Decoración · Flora nativa · Artesanía austral
+        </p>
 
-<footer>
-    <p>&copy; {% now "Y" %} Kau del Viento</p>
-</footer>
+        <p class="footer-copy">© {{ now|date:"Y" }} Kau del Viento</p>
+      </div>
+    </footer>
 
-</body>
+    <script src="{% static 'js/cart.js' %}"></script>
+    <div id="side-cart" class="side-cart">
+      <div class="side-cart-header">
+        <h3>Tu Kau</h3>
+        <button id="close-cart">×</button>
+      </div>
+
+      <div id="side-cart-content">
+        <!-- contenido dinámico -->
+      </div>
+    </div>
+
+    <div id="cart-overlay"></div>
+    {% load static %}
+    <script src="{% static 'js/cart.js' %}"></script>
+  </body>
 </html>

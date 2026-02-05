@@ -3,11 +3,14 @@
 {% block title %}Contacto{% endblock %}
 
 {% block content %}
-<h1>Contacto</h1>
+<div class="form-container">
+  <h1>Contacto</h1>
+  <p class="form-subtitle">Escríbenos, te responderemos pronto.</p>
 
-<form method="post">
+  <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Enviar mensaje</button>
-</form>
+  </form>
+</div>
 {% endblock %}

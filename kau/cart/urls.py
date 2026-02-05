@@ -8,4 +8,9 @@ urlpatterns = [
     path("add/", views.cart_add, name="add"),
     path("remove/", views.cart_remove, name="remove"),
     path("clear/", views.cart_clear, name="clear"),
+    path("side/", views.side_cart, name="side"),
+    path("remove-ajax/", views.cart_remove_ajax, name="remove_ajax"),
+    path("update-ajax/", views.cart_update_ajax, name="update_ajax"),
+
+
 ]

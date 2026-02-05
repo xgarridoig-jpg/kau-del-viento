@@ -1,44 +1,556 @@
+/* ======================================================
+   PALETA DE COLORES — ESTEPA Y VIENTO
+====================================================== */
+:root {
+  --rust-red: #8b4036;
+  --coiron-gold: #c2a878;
+  --wind-grey: #6b705c;
+  --deep-earth: #3f3328;
+  --wool-cream: #f7f5f0;
+  --shadow: 0 8px 25px rgba(63, 51, 40, 0.15);
+}
+
+/* ======================================================
+   RESET & BASE
+====================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    margin: 0;
-    font-family: system-ui, sans-serif;
-    background: #fafafa;
-    color: #222;
+  font-family: "Lato", sans-serif;
+  background-color: var(--wool-cream);
+  color: var(--deep-earth);
+  line-height: 1.7;
 }
 
-header {
-    background: #111;
-    color: #fff;
-    padding: 1rem;
+h1,
+h2,
+h3 {
+  font-family: "Cinzel", serif;
+  letter-spacing: 1px;
 }
 
+p {
+  font-size: 1rem;
+}
+
+/* ======================================================
+   NAVEGACIÓN
+====================================================== */
 nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  background-color: #fff;
+  padding: 1.5rem 6%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 4px solid var(--coiron-gold);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-nav a {
-    color: #fff;
-    text-decoration: none;
-    margin-right: 1rem;
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--rust-red);
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-main {
-    padding: 2rem;
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
 }
 
-.messages {
-    list-style: none;
-    padding: 0;
+.nav-links a,
+.nav-link-btn {
+  text-decoration: none;
+  background: none;
+  border: none;
+  font: inherit;
+  color: var(--deep-earth);
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  transition: color 0.3s;
 }
 
-.message {
-    padding: 0.75rem;
-    margin-bottom: 0.5rem;
-    border-radius: 4px;
+.nav-links a:hover,
+.nav-link-btn:hover {
+  color: var(--rust-red);
+}
+/* ======================================================
+   FIX LINKS NAVBAR (override navegador)
+====================================================== */
+nav a,
+nav a:link,
+nav a:visited,
+nav a:hover,
+nav a:active {
+  text-decoration: none;
+  color: inherit;
+}
+/* ======================================================
+   HERO
+====================================================== */
+.hero {
+  height: 70vh;
+  min-height: 480px;
+  background-image: url("../img/hero.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
 }
 
-.message.success { background: #d4edda; }
-.message.error,
-.message.danger { background: #f8d7da; }
-.message.info { background: #d1ecf1; }
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.hero-content {
+  position: relative;
+  text-align: center;
+  color: #fff;
+  max-width: 800px;
+  padding: 20px;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.hero-box {
+  background: rgba(60, 50, 40, 0.75);
+  padding: 30px;
+  border-radius: 6px;
+}
+
+.hero-box p {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.hero-sub {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin-bottom: 20px;
+}
+
+.btn-main {
+  display: inline-block;
+  padding: 12px 28px;
+  background-color: #8b3e2f;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: background 0.3s ease;
+}
+
+.btn-main:hover {
+  background-color: #6f2f24;
+}
+
+/* ======================================================
+   CONTENEDOR GENERAL
+====================================================== */
+.container {
+  max-width: 1200px;
+  margin: 6rem auto;
+  padding: 0 20px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+}
+
+.section-header p {
+  color: var(--wind-grey);
+  font-style: italic;
+}
+
+/* ======================================================
+   GRID DE PRODUCTOS
+====================================================== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+}
+
+.card {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow);
+}
+
+.card img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 1.6rem;
+  text-align: center;
+}
+
+.category {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--coiron-gold);
+}
+
+.price {
+  display: block;
+  font-size: 1.2rem;
+  color: var(--rust-red);
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.btn-add {
+  background-color: var(--deep-earth);
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  transition: background 0.3s;
+}
+
+.btn-add:hover {
+  background-color: var(--rust-red);
+}
+
+/* ======================================================
+   FORMULARIOS (AISLADOS – IMPORTANTE)
+====================================================== */
+.form-container {
+  max-width: 520px;
+  margin: 6rem auto;
+  background: #fff;
+  border: 1px solid #e6e1d8;
+  box-shadow: var(--shadow);
+  padding: 32px;
+}
+
+.form-container h1 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.form-subtitle {
+  text-align: center;
+  color: var(--wind-grey);
+  margin-bottom: 25px;
+  font-style: italic;
+}
+
+.form-container label {
+  display: block;
+  margin: 14px 0 6px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.form-container input,
+.form-container textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cfc7bb;
+  background: var(--wool-cream);
+  font-family: "Lato", sans-serif;
+  border-radius: 4px;
+}
+
+.form-container textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-container button {
+  width: 100%;
+  margin-top: 18px;
+  padding: 12px;
+  background: var(--deep-earth);
+  color: #fff;
+  border: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.form-container button:hover {
+  background: var(--rust-red);
+}
+
+/* ======================================================
+   HISTORIA — EL ESPÍRITU DEL KAU (ENFASIS VISUAL)
+====================================================== */
+.historia-kau {
+  background: var(--wool-cream);
+  padding: 7rem 1.5rem;
+}
+
+.historia-wrapper {
+  max-width: 820px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Línea vertical sutil */
+.historia-wrapper::before {
+  content: "";
+  position: absolute;
+  left: -40px;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: var(--coiron-gold);
+  opacity: 0.4;
+}
+
+.historia-eyebrow {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  color: var(--wind-grey);
+  margin-bottom: 0.5rem;
+}
+
+.historia-wrapper h2 {
+  font-size: 2.4rem;
+  margin-bottom: 2rem;
+}
+
+.historia-intro {
+  font-style: italic;
+  margin-bottom: 2.5rem;
+  color: var(--wind-grey);
+  font-size: 1.05rem;
+}
+
+/* Texto narrativo */
+.historia-texto {
+  margin-bottom: 3rem;
+}
+
+.historia-texto p {
+  margin-bottom: 1.4rem;
+  max-width: 720px;
+}
+
+/* =========================
+   VALORES COMO BLOQUES
+========================= */
+.historia-valores {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+}
+
+.historia-valores li {
+  background: #fff;
+  padding: 1.6rem;
+  border-left: 4px solid var(--rust-red);
+  box-shadow: var(--shadow);
+}
+
+.historia-valores strong {
+  display: block;
+  font-family: "Cinzel", serif;
+  letter-spacing: 1px;
+  color: var(--rust-red);
+  margin-bottom: 0.4rem;
+}
+
+.historia-valores span {
+  font-size: 0.95rem;
+  color: var(--deep-earth);
+}
+
+
+
+/* ======================================================
+   FOOTER — CIERRE DE REFUGIO
+====================================================== */
+.site-footer {
+  background-color: var(--deep-earth);
+  color: #d6d1c8;
+  padding: 4rem 1.5rem 3rem;
+  margin-top: 6rem;
+  border-top: 6px solid var(--rust-red);
+}
+
+.footer-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer-brand {
+  font-family: "Cinzel", serif;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.footer-text {
+  font-size: 0.95rem;
+  color: #c2bdb2;
+  margin-bottom: 2rem;
+}
+
+.footer-copy {
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  color: #a8a296;
+}
+
+/* ======================================================
+   FORM HELP TEXT (DJANGO)
+====================================================== */
+.form-container .helptext {
+  font-size: 0.75rem;
+  color: var(--wind-grey);
+  margin-top: 4px;
+  display: block;
+}
+
+/* ===============================
+   CONTROL DE CANTIDAD
+=============================== */
+.quantity-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.qty-btn {
+  background: var(--deep-earth);
+  color: #fff;
+  border: none;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.quantity-control input {
+  width: 50px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+/* ===============================
+   CARRITO LATERAL
+=============================== */
+.side-cart {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 360px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+  z-index: 1000;
+  transition: right 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.side-cart.open {
+  right: 0;
+}
+
+.side-cart-header {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+}
+
+#side-cart-content {
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+#cart-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  z-index: 999;
+}
+
+#cart-overlay.active {
+  display: block;
+}
+/* ===============================
+   SIDE CART ITEMS
+=============================== */
+.side-cart-list {
+  list-style: none;
+  padding: 0;
+}
+
+.side-cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.side-cart-item button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--rust-red);
+}
+
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .nav-links {
+    display: none;
+  }
+}

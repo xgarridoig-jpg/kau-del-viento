@@ -44,14 +44,17 @@ Kau del Viento | Refugio Patagónico
 
         <h3>{{ producto.nombre }}</h3>
 
-        <span class="price">
-          ${{ producto.precio }}
-        </span>
+        <span class="price">${{ producto.precio }}</span>
 
-        <form method="post" action="{% url 'cart:add' %}">
+        <form class="add-to-cart-form" data-id="{{ producto.id }}">
           {% csrf_token %}
-          <input type="hidden" name="product_id" value="{{ producto.id }}">
-          <input type="hidden" name="quantity" value="1">
+
+          <div class="quantity-control">
+            <button type="button" class="qty-btn minus">−</button>
+            <input type="number" name="quantity" value="1" min="1">
+            <button type="button" class="qty-btn plus">+</button>
+          </div>
+
           <button type="submit" class="btn-add">
             Agregar al Kau
           </button>
@@ -85,16 +88,14 @@ Kau del Viento | Refugio Patagónico
       <p>
         Kau del Viento nace en la estepa patagónica, donde el paisaje es amplio,
         el clima exige respeto y cada objeto debe tener propósito.
-        Aquí el tiempo avanza lento, como el tejido de la lana
-        o el secado natural de la flora.
+        Aquí el tiempo avanza lento.
       </p>
 
       <p>
         Cada pieza es una extensión del territorio:
         madera que conserva su veta,
         fibras que abrigan,
-        ramas y flores que no se imponen,
-        solo acompañan.
+        ramas y flores que no se imponen.
       </p>
     </div>
 

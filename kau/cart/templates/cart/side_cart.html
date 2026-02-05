@@ -1,0 +1,33 @@
+{% if cart.total_items %}
+<ul class="side-cart-list">
+  {% for item in cart %}
+  <li class="side-cart-item">
+
+    <div class="side-cart-info">
+      <strong>{{ item.producto.nombre }}</strong>
+      <span>${{ item.price }}</span>
+    </div>
+
+    <div class="side-cart-qty">
+      <button class="qty-btn minus" data-id="{{ item.producto.id }}">−</button>
+      <span>{{ item.quantity }}</span>
+      <button class="qty-btn plus" data-id="{{ item.producto.id }}">+</button>
+    </div>
+
+    <button class="remove-item" data-id="{{ item.producto.id }}">✕</button>
+
+  </li>
+  {% endfor %}
+</ul>
+
+<p class="side-cart-total">
+  <strong>Total:</strong> ${{ cart.total_price }}
+</p>
+
+<a href="{% url 'orders:checkout' %}" class="btn-main">
+  Ir a checkout
+</a>
+
+{% else %}
+<p class="side-cart-empty">Tu carrito está vacío.</p>
+{% endif %}
