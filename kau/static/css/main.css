@@ -541,6 +541,142 @@ nav a:active {
   color: var(--rust-red);
 }
 
+.page-container {
+  max-width: 900px;
+  margin: 5rem auto;
+  padding: 0 20px;
+}
+
+.page-title {
+  font-family: "Cinzel", serif;
+  font-size: 2.6rem;
+  margin-bottom: 2rem;
+  border-bottom: 3px solid var(--coiron-gold);
+  padding-bottom: 1rem;
+}
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2.5rem;
+}
+
+.cart-table th {
+  text-align: left;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--wind-grey);
+  padding-bottom: 10px;
+}
+
+.cart-table td {
+  padding: 14px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--rust-red);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.cart-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cart-total {
+  font-size: 1.4rem;
+}
+
+.cart-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-secondary {
+  padding: 12px 24px;
+  border: 1px solid var(--deep-earth);
+  text-decoration: none;
+  color: var(--deep-earth);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.checkout-form {
+  max-width: 500px;
+  background: #fff;
+  padding: 2.5rem;
+  border: 1px solid #e6e1d8;
+  box-shadow: var(--shadow);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.checkout-total {
+  margin: 2rem 0;
+  font-size: 1.3rem;
+}
+
+.order-success {
+  max-width: 620px;
+  margin: 6rem auto;
+  background: #fff;
+  padding: 4rem 3rem;
+  text-align: center;
+  border: 1px solid #e6e1d8;
+  box-shadow: var(--shadow);
+}
+
+.order-eyebrow {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--coiron-gold);
+  margin-bottom: 1rem;
+}
+
+.order-success h1 {
+  font-family: "Cinzel", serif;
+  font-size: 2.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.order-message {
+  font-size: 1.05rem;
+  color: var(--wind-grey);
+  margin-bottom: 2.5rem;
+  line-height: 1.8;
+}
+
+.order-box {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 1.5rem 0;
+  margin-bottom: 2.5rem;
+}
+
+.order-number {
+  font-size: 1.6rem;
+  color: var(--rust-red);
+  letter-spacing: 1px;
+}
+
 
 /* ======================================================
    RESPONSIVE

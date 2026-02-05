@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from cart.session_cart import Cart
 
 from .forms import CheckoutForm
@@ -32,13 +32,19 @@ def checkout(request):
                 )
 
             cart.clear()
-            messages.success(request, "Pedido creado correctamente.")
-            return redirect("orders:success", pedido_id=pedido.id)
+            return redirect("orders:success", order_id=pedido.id)
+
     else:
         form = CheckoutForm()
 
-    return render(request, "orders/checkout.html", {"form": form, "cart": cart})
+    return render(request, "orders/checkout.html", {
+        "form": form,
+        "cart": cart
+    })
 
 
-def success(request, pedido_id):
-    return render(request, "orders/success.html", {"pedido_id": pedido_id})
+def success(request, order_id):
+    pedido = get_object_or_404(Pedido, id=order_id)
+    return render(request, "orders/success.html", {
+        "pedido": pedido
+    })

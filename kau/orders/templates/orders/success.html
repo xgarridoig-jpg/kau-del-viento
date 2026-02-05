@@ -1,10 +1,31 @@
 {% extends "base.html" %}
 
-{% block title %}Pedido confirmado{% endblock %}
-
 {% block content %}
-<h1>¡Gracias por tu compra!</h1>
-<p>Tu pedido fue creado correctamente.</p>
-<p><strong>Número de pedido:</strong> {{ pedido_id }}</p>
-<a href="{% url 'core:home' %}">Volver al inicio</a>
+<section class="page-container">
+
+  <div class="order-success">
+
+    <span class="order-eyebrow">Gracias por tu compra</span>
+
+    <h1>Tu Kau ya está en camino</h1>
+
+    <p class="order-message">
+      Tu pedido fue creado correctamente.<br>
+      Cada pieza será preparada con el mismo cuidado con el que fue pensada.
+    </p>
+
+    <div class="order-box">
+      <p>
+        <strong>Número de pedido</strong><br>
+        <span class="order-id">#{{ pedido.id }}</span>
+      </p>
+    </div>
+
+    <a href="{% url 'core:home' %}" class="btn-main">
+      Volver al inicio
+    </a>
+
+  </div>
+
+</section>
 {% endblock %}
