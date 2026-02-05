@@ -57,6 +57,14 @@ Genera el archivo `db.sqlite3` y la estructura de tablas.
 python manage.py migrate
 ```
 
+## 🖼️ Imágenes de productos
+
+Las imágenes de los productos se cargan dinámicamente desde el **panel de administración de Django**.
+
+Al clonar el repositorio, **no existen productos ni archivos multimedia**, ya que estos corresponden a **contenido dinámico** y no forman parte del **código fuente del proyecto**.
+
+Este comportamiento es el esperado y sigue las **buenas prácticas en proyectos Django**, donde el repositorio versiona únicamente el código y no los datos generados en tiempo de ejecución.
+
 ---
 
 ## 👤 Creación de Usuarios (Requerido)
