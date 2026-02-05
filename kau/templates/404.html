@@ -1,9 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}Página no encontrada{% endblock %}
+{% block title %}Página no encontrada | Kau del Viento{% endblock %}
 
 {% block content %}
-<h1>404 — Página no encontrada</h1>
-<p>La página que buscas no existe.</p>
-<a href="{% url 'core:home' %}">Volver al inicio</a>
+<section class="restricted">
+  <div class="restricted-card">
+    <span class="restricted-eyebrow">Error 404</span>
+
+    <h1>Este sendero no existe</h1>
+
+    <p class="restricted-text">
+      La ruta que intentas recorrer no forma parte de Kau del Viento.
+      Quizás el viento te trajo aquí por error.
+    </p>
+
+    <div class="restricted-actions">
+      <a href="{% url 'core:home' %}" class="btn-main">Volver al inicio</a>
+    </div>
+  </div>
+</section>
 {% endblock %}

@@ -1,9 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}Acceso restringido{% endblock %}
+{% block title %}Acceso restringido | Kau del Viento{% endblock %}
 
 {% block content %}
-<h1>Acceso restringido</h1>
-<p>No tienes permisos para acceder a este dashboard.</p>
-<a href="{% url 'core:home' %}">Volver al inicio</a>
+<section class="restricted">
+  <div class="restricted-card">
+    <span class="restricted-eyebrow">Acceso restringido</span>
+
+    <h1>No tienes permisos para acceder</h1>
+
+    <p class="restricted-text">
+      Este espacio está reservado de Kau del Viento.
+      Si crees que esto es un error, por favor contáctanos.
+    </p>
+
+    <div class="restricted-actions">
+      <a href="{% url 'core:home' %}" class="btn-main">Volver al inicio</a>
+    </div>
+  </div>
+</section>
 {% endblock %}

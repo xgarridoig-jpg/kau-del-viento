@@ -708,6 +708,114 @@ nav a:active {
   background-color: #fff4dc;
   border-left-color: #c2a878;
 }
+/* ===============================
+   ACCESO RESTRINGIDO
+=============================== */
+
+.restricted {
+  min-height: 65vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--wool-cream);
+  padding: 4rem 1rem;
+}
+
+.restricted-card {
+  background: #fff;
+  max-width: 620px;
+  width: 100%;
+  padding: 3.5rem 3rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border-top: 4px solid var(--coiron-gold);
+}
+
+.restricted-eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--coiron-gold);
+  margin-bottom: 1.2rem;
+}
+
+.restricted-card h1 {
+  font-family: "Cinzel", serif;
+  font-size: 2.1rem;
+  margin-bottom: 1.2rem;
+  color: var(--deep-earth);
+}
+
+.restricted-text {
+  font-size: 1rem;
+  color: var(--wind-grey);
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+.restricted-actions {
+  display: flex;
+  justify-content: center;
+}
+
+/* ======================================================
+   ERROR 404 / ACCESO RESTRINGIDO
+====================================================== */
+
+.restricted {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--wool-cream);
+  padding: 4rem 1rem;
+}
+
+.restricted-card {
+  background: #fff;
+  max-width: 620px;
+  width: 100%;
+  padding: 3.5rem 3rem;
+  text-align: center;
+  border: 1px solid #e6e1d8;
+  box-shadow: var(--shadow);
+}
+
+.restricted-eyebrow {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--coiron-gold);
+  margin-bottom: 1rem;
+}
+
+.restricted-card h1 {
+  font-family: "Cinzel", serif;
+  font-size: 2.4rem;
+  letter-spacing: 2px;
+  margin-bottom: 1.2rem;
+  color: var(--deep-earth);
+}
+
+.restricted-text {
+  font-size: 1.05rem;
+  color: var(--wind-grey);
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+}
+
+.restricted-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.restricted-actions .btn-main {
+  padding: 12px 32px;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+}
 
 
 /* ======================================================
