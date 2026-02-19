@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Panel Admin | Kau del Viento{% endblock %}
+{% block title %}
+Panel Admin | Kau del Viento
+{% endblock %}
 
 {% block content %}
+
 <section class="container">
   <div class="section-header">
     <h2>Panel de Administración</h2>
@@ -13,8 +16,10 @@
     <div class="card">
       <div class="card-body">
         <h3>Usuarios</h3>
-        <p>Administrar cuentas, permisos y accesos.</p>
-        <a href="/admin/auth/user/" class="btn-main">Ver usuarios</a>
+        <p>Visualización de cuentas registradas y estado de acceso.</p>
+        <a href="{% url 'dashboard:user_list' %}" class="btn-main">
+  Ver usuarios
+</a>
       </div>
     </div>
 
@@ -22,15 +27,26 @@
       <div class="card-body">
         <h3>Mensajes</h3>
         <p>Consultas recibidas desde el formulario de contacto.</p>
-        <a href="/admin/core/consultacontacto/" class="btn-main">Ver mensajes</a>
+        <a href="{% url 'core:consultas_list' %}" class="btn-main">
+          Ver consultas
+        </a>
       </div>
     </div>
 
     <div class="card">
       <div class="card-body">
         <h3>Contenido</h3>
-        <p>Gestiona productos, textos e imágenes.</p>
-        <a href="/admin/" class="btn-main">Ir al admin</a>
+        <p>Gestión completa del catálogo de productos.</p>
+        <a href="{% url 'product_list' %}" class="btn-main">
+          Gestionar productos
+        </a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h3>Panel Técnico</h3>
+        <p>Administración avanzada del sistema (Django Admin).</p>
+        <a href="/admin/" class="btn-main">Ir al panel técnico</a>
       </div>
     </div>
   </div>
