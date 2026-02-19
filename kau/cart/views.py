@@ -16,7 +16,7 @@ def cart_add(request):
 
     return JsonResponse({
         "ok": True,
-        "total_items": cart.total_items(),
+        "total_items": cart.total_items,
     })
 
 
@@ -29,8 +29,8 @@ def cart_remove(request):
 
     return JsonResponse({
         "ok": True,
-        "total_items": cart.total_items(),
-        "total_price": cart.total_price(),
+        "total_items": cart.total_items,
+        "total_price": cart.get_total_price(),
     })
 
 
@@ -44,8 +44,8 @@ def cart_update_ajax(request):
 
     return JsonResponse({
         "ok": True,
-        "total_items": cart.total_items(),
-        "total_price": cart.total_price(),
+        "total_items": cart.total_items,
+        "total_price": cart.get_total_price(),
     })
 
 
@@ -60,7 +60,7 @@ def side_cart(request):
 
     return JsonResponse({
         "html": html,
-        "total_items": cart.total_items(),
+        "total_items": cart.total_items,
     })
 
 
@@ -85,6 +85,6 @@ def cart_remove_ajax(request):
 
     return JsonResponse({
         "ok": True,
-        "total_items": cart.total_items(),
-        "total_price": cart.total_price(),
+        "total_items": cart.total_items,
+        "total_price": cart.get_total_price(),
     })

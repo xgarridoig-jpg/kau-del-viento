@@ -21,7 +21,7 @@
 </ul>
 
 <p class="side-cart-total">
-  <strong>Total:</strong> ${{ cart.total_price }}
+  <strong>Total:</strong> ${{ cart.get_total_price }}
 </p>
 
 <a href="{% url 'orders:checkout' %}" class="btn-main">

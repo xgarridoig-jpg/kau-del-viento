@@ -10,16 +10,25 @@ def login_view(request):
     if request.user.is_authenticated:
         return redirect_by_role(request.user)
 
+    next_url = request.GET.get("next") or request.POST.get("next")
+
     if request.method == "POST":
         form = LoginForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+
+            if next_url:
+                return redirect(next_url)
+
             return redirect_by_role(user)
     else:
         form = LoginForm(request)
 
-    return render(request, "accounts/login.html", {"form": form})
+    return render(request, "accounts/login.html", {
+        "form": form,
+        "next": next_url,
+    })
 
 
 def signup_view(request):

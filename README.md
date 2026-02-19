@@ -1,162 +1,235 @@
 
 # 🦅 Kau del Viento
 
+### Plataforma E-Commerce con Django ORM y Administración CRUD
+
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
-![Django](https://img.shields.io/badge/Django-4.2-green)
-![Status](https://img.shields.io/badge/Estado-Finalizado-success)
-
-**Plataforma de E-commerce y Gestión de Usuarios.**
-Proyecto final para el **Módulo 6: Desarrollo de Aplicaciones Web con Python Django**.
-
----
-
-## 📖 Descripción del Proyecto
-
-**Kau del Viento** es una aplicación web robusta que integra un sistema completo de autenticación, gestión de perfiles diferenciados y un flujo de compras. El proyecto demuestra la implementación de las mejores prácticas de Django, seguridad en vistas y manejo de formularios.
-
-### ✨ Funcionalidades Clave
-*   🔐 **Seguridad:** Sistema de Login/Registro/Logout nativo.
-*   🛡️ **Roles:** Paneles diferenciados para `Usuario` y `Administrador`.
-*   🛒 **E-commerce:** Carrito de compras funcional y checkout.
-*   🎨 **UX:** Navegación dinámica basada en el estado de la sesión.
+![Django](https://img.shields.io/badge/Django-6.0-green)
+![Modulo](https://img.shields.io/badge/Módulo-7-purple)
+![ORM](https://img.shields.io/badge/Django-ORM-important)
+![Status](https://img.shields.io/badge/Estado-Completo-success)
 
 ---
 
-## 🛠️ Instalación y Configuración (Paso a Paso)
+# 📌 Proyecto Académico – Módulo 7
 
-Sigue estas instrucciones para ejecutar el proyecto localmente desde cero.
+## Acceso a Datos en Aplicaciones Python Django
 
-### 1. Clonar el repositorio
+Este repositorio corresponde a la evolución del proyecto desarrollado en el **Módulo 6**, extendido y mejorado en el **Módulo 7** para implementar correctamente la capa de acceso a datos utilizando **Django ORM**, relaciones entre modelos, migraciones y operaciones CRUD completas.
+
+El proyecto simula la administración interna de un e-commerce, permitiendo gestionar el catálogo de productos mediante un módulo exclusivo de administración.
+
+---
+
+# 🎯 Objetivo del Módulo 7
+
+Implementar un módulo de administración de productos que permita:
+
+* ✅ Uso completo de **Django ORM**
+* ✅ Modelado de entidades del dominio
+* ✅ Relaciones entre modelos (Producto–Categoría)
+* ✅ Migraciones aplicadas correctamente
+* ✅ CRUD completo funcional
+* ✅ Integración de modelos con vistas y templates
+* ✅ Registro del modelo en Django Admin
+* ✅ Sistema de mensajes para feedback al usuario
+
+---
+
+# 🏗️ Modelo de Datos Implementado
+
+## 📂 Categoria
+
+```python
+class Categoria(models.Model):
+    nombre = models.CharField(max_length=100, unique=True)
+    descripcion = models.TextField(blank=True)
+```
+
+---
+
+## 🛍️ Producto
+
+```python
+class Producto(models.Model):
+    nombre = models.CharField(max_length=120)
+    descripcion = models.TextField(blank=True)
+    categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT)
+    precio = models.DecimalField(...)
+    imagen = models.ImageField(...)
+    activo = models.BooleanField(default=True)
+```
+
+---
+
+## 🔗 Relación ORM Implementada
+
+**Producto → Categoria (ForeignKey real)**
+
+* Relación protegida (`on_delete=PROTECT`)
+* Uso de `related_name`
+* Consultas ORM funcionales
+* Migraciones aplicadas correctamente
+
+
+
+---
+
+# 🔁 CRUD Completo de Productos
+
+Se implementó un módulo de administración funcional accesible solo para usuarios `staff`.
+
+## 📌 Rutas Implementadas
+
+| Ruta                     | Funcionalidad        |
+| ------------------------ | -------------------- |
+| `/products/`             | Listado de productos |
+| `/products/create/`      | Crear producto       |
+| `/products/edit/<id>/`   | Editar producto      |
+| `/products/delete/<id>/` | Eliminar producto    |
+
+---
+
+## ✔ Funcionalidades del CRUD
+
+* Validación de campos obligatorios
+* Precio validado con `MinValueValidator`
+* Verificación de existencia antes de editar/eliminar
+* Mensajes de éxito y error con `Django messages`
+* Integración completa con templates
+* Uso exclusivo del ORM (sin SQL crudo)
+
+
+
+---
+
+# 🛡️ Django Admin Integrado
+
+El modelo `Producto` está registrado en el panel administrativo de Django:
+
+```
+/admin/
+```
+
+Desde allí se pueden:
+
+* Crear productos
+* Editar productos
+* Filtrar por categoría
+* Activar/desactivar productos
+
+
+
+---
+
+# 🛒 Funcionalidades Complementarias del Proyecto
+
+Aunque el foco del Módulo 7 es la administración de productos, el sistema incluye:
+
+* 🔐 Autenticación completa (login / registro / logout)
+* 👥 Roles diferenciados (Usuario / Staff)
+* 🛒 Carrito persistente por sesión
+* 📦 Sistema de pedidos asociado a usuario autenticado
+* 🎨 Interfaz personalizada y responsive
+
+
+
+---
+
+# 🛠️ Instalación del Proyecto
+
+## 1️⃣ Clonar repositorio
+
 ```bash
 git clone https://github.com/xgarridoig-jpg/kau-del-viento.git
 cd kau-del-viento
 ```
 
-### 2. Configurar entorno virtual
-Es indispensable aislar las dependencias.
+---
 
-*   **Windows:**
-    ```bash
-    python -m venv venv
-    venv\Scripts\activate
-    ```
-*   **Mac/Linux:**
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate
-    ```
+## 2️⃣ Crear entorno virtual
 
-### 3. Instalar dependencias
+### Windows
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+### Mac / Linux
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+---
+
+## 3️⃣ Instalar dependencias
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Migrar la Base de Datos
-Genera el archivo `db.sqlite3` y la estructura de tablas.
+---
+
+## 4️⃣ Aplicar migraciones
+
 ```bash
 python manage.py migrate
 ```
 
-## 🖼️ Imágenes de productos
-
-Las imágenes de los productos se cargan dinámicamente desde el **panel de administración de Django**.
-
-Al clonar el repositorio, **no existen productos ni archivos multimedia**, ya que estos corresponden a **contenido dinámico** y no forman parte del **código fuente del proyecto**.
-
-Este comportamiento es el esperado y sigue las **buenas prácticas en proyectos Django**, donde el repositorio versiona únicamente el código y no los datos generados en tiempo de ejecución.
-
 ---
 
-## 👤 Creación de Usuarios (Requerido)
-
-Al no versionar la base de datos, **es obligatorio crear los usuarios** para probar la aplicación.
-
-### A. Crear Superusuario (Administrador)
-Acceso total al sistema y al panel `/admin`.
+## 5️⃣ Crear superusuario
 
 ```bash
 python manage.py createsuperuser
 ```
-*Sigue las instrucciones en pantalla para asignar usuario (ej: `admin`) y contraseña.*
-
-### B. Crear Usuario Normal (Cliente)
-Tienes dos opciones para crear un cliente de prueba:
-
-**Opción 1: Vía Terminal (Rápido)**
-Copia y pega este comando en tu terminal para crear un usuario automáticamente sin pasar por el formulario web:
-
-```bash
-python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_user('cliente_test', 'cliente@test.com', 'Pass1234')"
-```
-> **Credenciales creadas:** Usuario: `cliente_test` | Pass: `Pass1234`
-
-**Opción 2: Vía Web (Prueba funcional)**
-Ve a la ruta `/accounts/signup/` en el navegador y completa el formulario de registro.
 
 ---
 
-## 🚀 Ejecución
-
-Inicia el servidor de desarrollo:
+## 6️⃣ Ejecutar servidor
 
 ```bash
 python manage.py runserver
 ```
 
-Visita la aplicación en:
-👉 **http://127.0.0.1:8000/**
+Ir a:
+
+👉 [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
 ---
 
-## 📸 Evidencia de Funcionamiento
+# 📸 Evidencias 
 
-A continuación se presentan las capturas de pantalla que validan los requerimientos de la rúbrica.
+Se incluyen capturas de:
 
-### 1. Registro de Usuario
-*Evidencia del formulario de registro y validación de datos.*
-![alt text](image-1.png)
+* ✔ Listado de productos
+* ✔ Formulario de creación
+* ✔ Edición de producto
+* ✔ Eliminación de producto
+* ✔ Panel Admin
+* ✔ Migraciones aplicadas
+* ✔ Base de datos poblada
 
-![alt text](image.png)
----
 
-### 2. Inicio de Sesión (Login)
-*Evidencia del ingreso correcto al sistema.*
+# 🏁 Conclusión Académica
 
-![alt text](image-3.png)
+El proyecto cumple con los requerimientos del **Módulo 7 – Acceso a Datos en Django**, implementando correctamente:
 
-![alt text](image-4.png)
----
+* Arquitectura MVT
+* ORM de Django
+* Relaciones entre modelos
+* Migraciones funcionales
+* CRUD completo
+* Integración con vistas y templates
+* Administración desde Django Admin
 
-### 3. Vista Protegida (Dashboard)
-*Evidencia de acceso exclusivo para usuarios logueados. Intento de acceso sin sesión redirige al login.*
-
-![alt text](image-6.png)
-
----
-
-## 🗺️ Estructura de Rutas
-
-| Módulo | Ruta URL | Descripción | Acceso |
-| :--- | :--- | :--- | :--- |
-| **Auth** | `/accounts/signup/` | Registro de usuarios | Público |
-| **Auth** | `/accounts/login/` | Inicio de sesión | Público |
-| **Auth** | `/accounts/logout/` | Cierre de sesión | Logueado |
-| **Cliente** | `/dashboard/usuario/` | Panel principal del cliente | **Protegido** |
-| **Admin** | `/dashboard/admin/` | Panel de gestión interna | **Staff** |
-| **Core** | `/` | Página de inicio | Público |
-| **Core** | `/contacto/` | Formulario de contacto | Público |
+Representa la evolución de un sistema e-commerce básico hacia una aplicación con gestión estructurada de datos utilizando buenas prácticas del framework.
 
 ---
 
-## 🏁 Conclusión Académica
-
-Este proyecto cumple al **100% con la rúbrica de evaluación**, implementando:
-1.  **MVT de Django** correctamente estructurado.
-2.  **Decoradores de seguridad** (`@login_required`) en vistas críticas.
-3.  **Formularios** (`UserCreationForm`, `AuthenticationForm`) integrados.
-4.  **Base de datos** relacional gestionada con ORM.
-
----
-**Desarrollado por:** Ximena Garrido  
-*Bootcamp Full Stack Python*
-
+**Desarrollado por:** Ximena Garrido
+Bootcamp Full Stack Python
+Módulo 7 – Acceso a Datos en Django 🚀

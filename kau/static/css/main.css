@@ -841,18 +841,6 @@ nav a:active {
 }
 
 
-/* ======================================================
-   RESPONSIVE
-====================================================== */
-@media (max-width: 768px) {
-  .hero h1 {
-    font-size: 2.5rem;
-  }
-
-  .nav-links {
-    display: none;
-  }
-}
 
 /* ===============================
    BOTÓN SUBIR — ELEGANTE
@@ -890,4 +878,73 @@ nav a:active {
 .scroll-top-btn:hover {
     background: var(--rust-red);
     transform: translateY(-3px);
+}
+/* ===============================
+   NAV RESPONSIVE ELEGANTE
+=============================== */
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  width: 22px;
+  height: 2px;
+  background: var(--deep-earth);
+  transition: all 0.3s ease;
+}
+
+/* Animación hamburguesa a X */
+.menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* MODO MÓVIL */
+@media (max-width: 768px) {
+
+  nav {
+    position: relative;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem 0;
+    border-bottom: 4px solid var(--coiron-gold);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transform: translateY(-20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+
+  .nav-links.active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+  }
+
 }
