@@ -205,13 +205,36 @@ Ir a:
 
 Se incluyen capturas de:
 
-* ✔ Listado de productos
-* ✔ Formulario de creación
-* ✔ Edición de producto
-* ✔ Eliminación de producto
-* ✔ Panel Admin
-* ✔ Migraciones aplicadas
-* ✔ Base de datos poblada
+1️⃣ Evidencia: Listado de productos (CRUD – READ)
+
+![Listado](kau\docs\01_listado_productos.png)
+
+2️⃣ Evidencia: Crear producto (CREATE)
+
+![Create](kau\docs\02_crear_producto_1.png)
+![Create](kau\docs\02_crear_producto_2.png)
+
+3️⃣ Evidencia: Editar producto (UPDATE)
+
+![Update](kau\docs\03_editar_producto_1.png)
+![Update](kau\docs\03_editar_producto_2.png)
+
+4️⃣ Evidencia: Eliminar producto (DELETE)
+
+![Delete](kau\docs\04_eliminar_producto_1.png)
+![Delete](kau\docs\04_eliminar_producto_2.png)
+
+5️⃣ Evidencia: Relación Producto – Categoría
+
+![Relacion](kau\docs\05_relacion_producto_categoria.png)
+
+6️⃣ Evidencia: Django Admin
+
+![Admin](kau\docs\06_django_admin.png)
+
+7️⃣ Evidencia: Migraciones aplicadas
+
+![Migraciones](kau\docs\07_migraciones.png)
 
 
 # 🏁 Conclusión Académica
