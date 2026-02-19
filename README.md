@@ -62,6 +62,19 @@ class Producto(models.Model):
 
 ---
 
+
+# 🗄️ Motor de Base de Datos
+
+El proyecto utiliza:
+
+**PostgreSQL**
+
+Configurado en `settings.py` mediante:
+
+```python
+ENGINE = 'django.db.backends.postgresql'
+```
+---
 ## 🔗 Relación ORM Implementada
 
 **Producto → Categoria (ForeignKey real)**
