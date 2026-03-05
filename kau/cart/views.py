@@ -1,16 +1,31 @@
 from django.contrib import messages
+from django.http import JsonResponse, HttpResponseNotAllowed
 from django.shortcuts import redirect, render
-from django.views.decorators.http import require_POST
 from django.template.loader import render_to_string
-from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+
 from .session_cart import Cart
+
+
+def _safe_int(value, default=1):
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
 
 
 @require_POST
 def cart_add(request):
     cart = Cart(request)
+
     product_id = request.POST.get("product_id")
-    quantity = int(request.POST.get("quantity", 1))
+    quantity = _safe_int(request.POST.get("quantity"), default=1)
+
+    if not product_id:
+        return JsonResponse({"ok": False, "error": "product_id requerido"}, status=400)
+
+    if quantity < 1:
+        quantity = 1
 
     cart.add(product_id=product_id, quantity=quantity)
 
@@ -22,15 +37,38 @@ def cart_add(request):
 
 @require_POST
 def cart_remove(request):
+    """
+    Remove para la página /cart/ (Tu Kau). POST + redirect.
+    """
     cart = Cart(request)
     product_id = request.POST.get("product_id")
+
+    if not product_id:
+        messages.error(request, "No se pudo quitar el producto del carrito.")
+        return redirect("cart:detail")
+
+    cart.remove(product_id)
+    messages.success(request, "Producto eliminado del carrito.")
+    return redirect("cart:detail")
+
+
+@require_POST
+def cart_remove_ajax(request):
+    """
+    Remove para el side-cart (AJAX). POST + JSON.
+    """
+    cart = Cart(request)
+    product_id = request.POST.get("product_id")
+
+    if not product_id:
+        return JsonResponse({"ok": False, "error": "product_id requerido"}, status=400)
 
     cart.remove(product_id)
 
     return JsonResponse({
         "ok": True,
         "total_items": cart.total_items,
-        "total_price": cart.get_total_price(),
+        "total_price": str(cart.get_total_price()),
     })
 
 
@@ -38,14 +76,20 @@ def cart_remove(request):
 def cart_update_ajax(request):
     cart = Cart(request)
     product_id = request.POST.get("product_id")
-    quantity = int(request.POST.get("quantity", 1))
+    quantity = _safe_int(request.POST.get("quantity"), default=1)
+
+    if not product_id:
+        return JsonResponse({"ok": False, "error": "product_id requerido"}, status=400)
+
+    if quantity < 1:
+        quantity = 1
 
     cart.update(product_id, quantity)
 
     return JsonResponse({
         "ok": True,
         "total_items": cart.total_items,
-        "total_price": cart.get_total_price(),
+        "total_price": str(cart.get_total_price()),
     })
 
 
@@ -70,21 +114,10 @@ def cart_detail(request):
 
 
 def cart_clear(request):
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["POST"])
+
     cart = Cart(request)
     cart.clear()
-
     messages.warning(request, "Carrito vaciado.")
     return redirect("cart:detail")
-
-@require_POST
-def cart_remove_ajax(request):
-    cart = Cart(request)
-    product_id = request.POST.get("product_id")
-
-    cart.remove(product_id)
-
-    return JsonResponse({
-        "ok": True,
-        "total_items": cart.total_items,
-        "total_price": cart.get_total_price(),
-    })

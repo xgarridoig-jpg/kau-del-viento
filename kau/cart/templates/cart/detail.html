@@ -1,52 +1,61 @@
 {% extends "base.html" %}
 
-{% block content %}
-<section class="page-container">
+{% block title %}Tu Kau{% endblock %}
 
+{% block content %}
+<div class="page-container">
   <h1 class="page-title">Tu Kau</h1>
 
-  {% if cart.total_items %}
-  <table class="cart-table">
-    <thead>
-      <tr>
-        <th>Producto</th>
-        <th>Cantidad</th>
-        <th>Subtotal</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in cart %}
-      <tr>
-        <td>{{ item.producto.nombre }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>${{ item.total_price }}</td>
-        <td>
-          <form method="post" action="{% url 'cart:remove' %}">
-            {% csrf_token %}
-            <input type="hidden" name="product_id" value="{{ item.producto.id }}">
-            <button class="btn-link">Quitar</button>
-          </form>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  {% if cart.total_items > 0 %}
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th class="text-center">Cantidad</th>
+          <th class="text-end">Subtotal</th>
+          <th class="text-end"></th>
+        </tr>
+      </thead>
 
-  <div class="cart-summary">
-    <p class="cart-total">
-      Total: <strong>${{ cart.total_price }}</strong>
-    </p>
+      <tbody>
+        {% for item in cart %}
+          <tr>
+            <td>{{ item.producto.nombre }}</td>
+            <td class="text-center">{{ item.quantity }}</td>
+            <td class="text-end">${{ item.total_price }}</td>
+            <td class="text-end">
+              <form method="post" action="{% url 'cart:remove' %}" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ item.producto.id }}">
+                <button type="submit" class="btn-link">Quitar</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 
-    <div class="cart-actions">
-      <a href="{% url 'orders:checkout' %}" class="btn-main">Ir a checkout</a>
-      <a href="{% url 'cart:clear' %}" class="btn-secondary">Vaciar carrito</a>
+    <div class="cart-summary">
+      <div class="cart-total">
+        <strong>Total:</strong> ${{ cart.get_total_price }}
+      </div>
+
+      <div class="cart-actions">
+        <a href="{% url 'orders:checkout' %}" class="btn-main">Ir a checkout</a>
+
+        <form method="post" action="{% url 'cart:clear' %}">
+          {% csrf_token %}
+          <button type="submit" class="btn-secondary">Vaciar carrito</button>
+        </form>
+      </div>
     </div>
-  </div>
 
   {% else %}
-    <p>Tu Kau está vacío.</p>
+    <div class="form-container">
+      <h1>Tu carrito está vacío</h1>
+      <p class="form-subtitle">Agrega productos desde la colección para continuar.</p>
+      <a class="btn-main" href="{% url 'core:home' %}#coleccion">Volver al catálogo</a>
+    </div>
   {% endif %}
-
-</section>
+</div>
 {% endblock %}
