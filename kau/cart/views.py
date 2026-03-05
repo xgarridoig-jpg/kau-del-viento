@@ -34,6 +34,25 @@ def cart_add(request):
         "total_items": cart.total_items,
     })
 
+@require_POST
+def cart_update(request):
+    cart = Cart(request)
+    product_id = request.POST.get("product_id")
+    try:
+        quantity = int(request.POST.get("quantity", 1))
+    except (TypeError, ValueError):
+        quantity = 1
+
+    if not product_id:
+        messages.error(request, "No se pudo actualizar la cantidad.")
+        return redirect("cart:detail")
+
+    if quantity < 1:
+        quantity = 1
+
+    cart.update(product_id, quantity)
+    messages.success(request, "Cantidad actualizada.")
+    return redirect("cart:detail")
 
 @require_POST
 def cart_remove(request):

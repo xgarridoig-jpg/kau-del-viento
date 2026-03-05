@@ -21,8 +21,21 @@
         {% for item in cart %}
           <tr>
             <td>{{ item.producto.nombre }}</td>
-            <td class="text-center">{{ item.quantity }}</td>
-            <td class="text-end">${{ item.total_price }}</td>
+            <td class="text-center">
+  <form method="post" action="{% url 'cart:update' %}" style="display:inline-flex; gap:10px; align-items:center; justify-content:center;">
+    {% csrf_token %}
+    <input type="hidden" name="product_id" value="{{ item.producto.id }}">
+    <input
+      type="number"
+      name="quantity"
+      value="{{ item.quantity }}"
+      min="1"
+      style="width:70px; text-align:center; border:1px solid #cfc7bb; background: var(--wool-cream); padding:8px; border-radius:4px;"
+    >
+    <button type="submit" class="btn-link">Actualizar</button>
+  </form>
+</td>
+            <td class="text-end">${{ item.total_price|floatformat:2 }}</td>
             <td class="text-end">
               <form method="post" action="{% url 'cart:remove' %}" style="display:inline;">
                 {% csrf_token %}
@@ -37,7 +50,7 @@
 
     <div class="cart-summary">
       <div class="cart-total">
-        <strong>Total:</strong> ${{ cart.get_total_price }}
+        <strong>Total:</strong> ${{ cart.get_total_price|floatformat:2 }}
       </div>
 
       <div class="cart-actions">
@@ -53,7 +66,9 @@
   {% else %}
     <div class="form-container">
       <h1>Tu carrito está vacío</h1>
-      <p class="form-subtitle">Agrega productos desde la colección para continuar.</p>
+      <p class="form-subtitle">
+        Agrega productos desde la colección para continuar.
+      </p>
       <a class="btn-main" href="{% url 'core:home' %}#coleccion">Volver al catálogo</a>
     </div>
   {% endif %}

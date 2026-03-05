@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from cart.session_cart import Cart
 from .forms import CheckoutForm
 from .models import Pedido, PedidoItem
-
+from django.http import Http404
 
 @login_required
 def checkout(request):
@@ -44,7 +44,9 @@ def checkout(request):
 
 @login_required
 def success(request, order_id):
-    pedido = get_object_or_404(Pedido, id=order_id, usuario=request.user)
+    pedido = Pedido.objects.filter(id=order_id, usuario=request.user).first()
+    if not pedido:
+        raise Http404
     return render(request, "orders/success.html", {"pedido": pedido})
 
 
