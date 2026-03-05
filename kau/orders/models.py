@@ -4,6 +4,20 @@ from products.models import Producto
 
 
 class Pedido(models.Model):
+    ESTADO_PENDIENTE = "pendiente"
+    ESTADO_CONFIRMADO = "confirmado"
+    ESTADO_ENVIADO = "enviado"
+    ESTADO_ENTREGADO = "entregado"
+    ESTADO_CANCELADO = "cancelado"
+
+    ESTADOS_CHOICES = [
+        (ESTADO_PENDIENTE, "Pendiente"),
+        (ESTADO_CONFIRMADO, "Confirmado"),
+        (ESTADO_ENVIADO, "Enviado"),
+        (ESTADO_ENTREGADO, "Entregado"),
+        (ESTADO_CANCELADO, "Cancelado"),
+    ]
+
     usuario = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -15,6 +29,11 @@ class Pedido(models.Model):
     email = models.EmailField()
     creado_en = models.DateTimeField(auto_now_add=True)
     total = models.PositiveIntegerField()
+    estado = models.CharField(
+        max_length=20,
+        choices=ESTADOS_CHOICES,
+        default=ESTADO_PENDIENTE,
+    )
 
     class Meta:
         ordering = ["-creado_en"]
@@ -40,3 +59,6 @@ class PedidoItem(models.Model):
 
     def subtotal(self):
         return self.precio * self.cantidad
+
+    def __str__(self):
+        return f"{self.producto} x {self.cantidad}"

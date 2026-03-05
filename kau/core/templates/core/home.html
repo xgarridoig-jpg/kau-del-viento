@@ -32,6 +32,58 @@ Kau del Viento | Refugio Patagónico
     <p>Piezas únicas inspiradas en la cultura Aonikenk y el paisaje austral.</p>
   </div>
 
+  <!-- FILTROS + ORDEN -->
+  <div class="mb-4">
+    <form method="get" action="{% url 'core:home' %}" class="row g-2 align-items-end">
+      <div class="col-12 col-md-4">
+        <label for="id_q" class="form-label">Buscar producto</label>
+        <input
+          type="text"
+          id="id_q"
+          name="q"
+          value="{{ q_actual }}"
+          class="form-control"
+          placeholder="Ej: vela, madera, florero..."
+        >
+      </div>
+
+      <div class="col-12 col-md-3">
+        <label for="id_categoria" class="form-label">Categoría</label>
+        <select id="id_categoria" name="categoria" class="form-select">
+          <option value="">Todas</option>
+          {% for categoria in categorias %}
+            <option value="{{ categoria.id }}" {% if categoria_actual == categoria.id|stringformat:"s" %}selected{% endif %}>
+              {{ categoria.nombre }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="col-12 col-md-3">
+        <label for="id_orden" class="form-label">Ordenar por</label>
+        <select id="id_orden" name="orden" class="form-select">
+          <option value="" {% if not orden_actual %}selected{% endif %}>Más recientes</option>
+          <option value="precio_asc" {% if orden_actual == "precio_asc" %}selected{% endif %}>Precio: menor a mayor</option>
+          <option value="precio_desc" {% if orden_actual == "precio_desc" %}selected{% endif %}>Precio: mayor a menor</option>
+          <option value="nombre_asc" {% if orden_actual == "nombre_asc" %}selected{% endif %}>Nombre: A-Z</option>
+          <option value="nombre_desc" {% if orden_actual == "nombre_desc" %}selected{% endif %}>Nombre: Z-A</option>
+        </select>
+      </div>
+
+      <div class="col-12 col-md-2 d-grid">
+        <button type="submit" class="btn btn-dark">Filtrar</button>
+      </div>
+
+      {% if q_actual or categoria_actual or orden_actual %}
+        <div class="col-12">
+          <a href="{% url 'core:home' %}#coleccion" class="btn btn-sm btn-outline-secondary mt-2">
+            Limpiar filtros
+          </a>
+        </div>
+      {% endif %}
+    </form>
+  </div>
+
   <div class="grid">
     {% for producto in productos %}
     <div class="card">
@@ -39,7 +91,7 @@ Kau del Viento | Refugio Patagónico
 
       <div class="card-body">
         <span class="category">
-          {{ producto.get_categoria_display }}
+          {{ producto.categoria.nombre }}
         </span>
 
         <h3>{{ producto.nombre }}</h3>
@@ -65,6 +117,56 @@ Kau del Viento | Refugio Patagónico
       <p>No hay productos disponibles.</p>
     {% endfor %}
   </div>
+
+  <!-- PAGINACIÓN -->
+  {% if productos.has_other_pages %}
+  <nav class="mt-4" aria-label="Paginación catálogo">
+    <ul class="pagination justify-content-center">
+
+      {% if productos.has_previous %}
+        <li class="page-item">
+          <a class="page-link"
+             href="?q={{ q_actual }}&categoria={{ categoria_actual }}&orden={{ orden_actual }}&page={{ productos.previous_page_number }}#coleccion">
+            Anterior
+          </a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <span class="page-link">Anterior</span>
+        </li>
+      {% endif %}
+
+      {% for num in productos.paginator.page_range %}
+        {% if productos.number == num %}
+          <li class="page-item active">
+            <span class="page-link">{{ num }}</span>
+          </li>
+        {% else %}
+          <li class="page-item">
+            <a class="page-link"
+               href="?q={{ q_actual }}&categoria={{ categoria_actual }}&orden={{ orden_actual }}&page={{ num }}#coleccion">
+              {{ num }}
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+      {% if productos.has_next %}
+        <li class="page-item">
+          <a class="page-link"
+             href="?q={{ q_actual }}&categoria={{ categoria_actual }}&orden={{ orden_actual }}&page={{ productos.next_page_number }}#coleccion">
+            Siguiente
+          </a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <span class="page-link">Siguiente</span>
+        </li>
+      {% endif %}
+
+    </ul>
+  </nav>
+  {% endif %}
 </section>
 
 <!-- HISTORIA -->
@@ -107,5 +209,29 @@ Kau del Viento | Refugio Patagónico
 
   </div>
 </section>
+
+<!-- SCROLL AUTOMÁTICO A COLECCIÓN SI HAY FILTROS -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const params = new URLSearchParams(window.location.search);
+    const tieneBusqueda = params.get("q");
+    const tieneCategoria = params.get("categoria");
+    const tieneOrden = params.get("orden");
+    const tienePagina = params.get("page");
+
+    if (tieneBusqueda || tieneCategoria || tieneOrden || tienePagina) {
+      const seccionColeccion = document.getElementById("coleccion");
+
+      if (seccionColeccion) {
+        setTimeout(() => {
+          seccionColeccion.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        }, 120);
+      }
+    }
+  });
+</script>
 
 {% endblock %}

@@ -1,0 +1,85 @@
+{% extends "base.html" %} {% block content %}
+<div class="container py-4">
+  <h1 class="mb-4">Mis pedidos</h1>
+
+  {% if pedidos %}
+  <div class="accordion" id="pedidosAccordion">
+    {% for pedido in pedidos %}
+    <div class="accordion-item mb-3 border rounded">
+      <h2 class="accordion-header" id="heading{{ pedido.id }}">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapse{{ pedido.id }}"
+          aria-expanded="false"
+          aria-controls="collapse{{ pedido.id }}"
+        >
+          <div
+            class="w-100 d-flex flex-column flex-md-row justify-content-between align-items-md-center pe-3"
+          >
+            <span>
+              <strong>Pedido #{{ pedido.id }}</strong>
+            </span>
+            <span class="text-muted">
+              {{ pedido.creado_en|date:"d/m/Y H:i" }}
+            </span>
+            <span>
+              Estado: <strong>{{ pedido.get_estado_display }}</strong>
+            </span>
+            <span> Total: <strong>${{ pedido.total }}</strong> </span>
+          </div>
+        </button>
+      </h2>
+
+      <div
+        id="collapse{{ pedido.id }}"
+        class="accordion-collapse collapse"
+        aria-labelledby="heading{{ pedido.id }}"
+        data-bs-parent="#pedidosAccordion"
+      >
+        <div class="accordion-body">
+          <p class="mb-2"><strong>Nombre:</strong> {{ pedido.nombre }}</p>
+          <p class="mb-3"><strong>Email:</strong> {{ pedido.email }}</p>
+
+          <div class="table-responsive">
+            <table class="table table-sm align-middle">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th class="text-center">Cantidad</th>
+                  <th class="text-end">Precio</th>
+                  <th class="text-end">Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in pedido.items.all %}
+                <tr>
+                  <td>{{ item.producto.nombre }}</td>
+                  <td class="text-center">{{ item.cantidad }}</td>
+                  <td class="text-end">${{ item.precio }}</td>
+                  <td class="text-end">${{ item.subtotal }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th colspan="3" class="text-end">Total pedido</th>
+                  <th class="text-end">${{ pedido.total }}</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="alert alert-info">Aún no has realizado pedidos.</div>
+  <a href="{% url 'core:home' %}#coleccion" class="btn btn-primary">
+    Ir al catálogo
+  </a>
+  {% endif %}
+</div>
+{% endblock %}
