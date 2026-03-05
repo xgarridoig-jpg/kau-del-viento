@@ -1,11 +1,12 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
-from .forms import ContactoForm
-from products.models import Producto, Categoria
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView
+
+from .forms import ContactoForm
 from .models import ConsultaContacto
+from products.models import Producto, Categoria
 
 
 def home(request):
@@ -33,7 +34,7 @@ def home(request):
     else:
         productos = productos.order_by("-id")
 
-    paginator = Paginator(productos, 6)  # 6 productos por página
+    paginator = Paginator(productos, 6)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
@@ -57,7 +58,7 @@ def contacto(request):
             form.save()
             messages.success(
                 request,
-                "Gracias por escribirnos 🌿 Tu mensaje fue enviado correctamente."
+                "Gracias por escribirnos 🌿 Tu mensaje fue enviado correctamente.",
             )
             return redirect("core:contacto")
     else:
