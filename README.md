@@ -1,271 +1,231 @@
+# Kau del Viento — E-commerce (Django + PostgreSQL) ![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=flat-square&logo=python&logoColor=white) ![Django](https://img.shields.io/badge/Django-6.x-092E20?style=flat-square&logo=django&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=flat-square&logo=postgresql&logoColor=white)
 
-# 🦅 Kau del Viento
+Aplicación web de comercio desarrollada con **Python**, **Django** y **PostgreSQL**.  
+Incluye catálogo persistente (ORM), carrito por sesión, flujo de compra completo y gestión administrativa de productos con control de acceso por rol.
 
-### Plataforma E-Commerce con Django ORM y Administración CRUD
-
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
-![Django](https://img.shields.io/badge/Django-6.0-green)
-![Modulo](https://img.shields.io/badge/Módulo-7-purple)
-![ORM](https://img.shields.io/badge/Django-ORM-important)
-![Status](https://img.shields.io/badge/Estado-Completo-success)
+Repositorio: https://github.com/xgarridoig-jpg/kau-del-viento  
+Portafolio: https://xgarridoig-jpg.github.io/
 
 ---
 
-# 📌 Proyecto Académico – Módulo 7
+## Funcionalidades
 
-## Acceso a Datos en Aplicaciones Python Django
+### Autenticación y acceso
+- Registro de usuarios
+- Login / Logout
+- Control de acceso por rol:
+  - **Cliente**: navega catálogo, opera carrito y realiza compras
+  - **Administrador (staff)**: gestiona productos (CRUD)
 
-Este repositorio corresponde a la evolución del proyecto desarrollado en el **Módulo 6**, extendido y mejorado en el **Módulo 7** para implementar correctamente la capa de acceso a datos utilizando **Django ORM**, relaciones entre modelos, migraciones y operaciones CRUD completas.
+### Catálogo y persistencia (ORM + PostgreSQL)
+- Productos persistidos en PostgreSQL
+- Relación **Producto → Categoría**
+- Catálogo público con:
+  - búsqueda por nombre
+  - filtro por categoría
+  - orden por precio / nombre
+  - paginación
 
-El proyecto simula la administración interna de un e-commerce, permitiendo gestionar el catálogo de productos mediante un módulo exclusivo de administración.
+### Carrito y compra (flujo completo)
+- Carrito basado en sesión:
+  - agregar productos
+  - actualizar cantidades
+  - quitar productos
+  - vaciar carrito
+  - subtotal por ítem y total general
+- Checkout:
+  - crea **Pedido** y **PedidoItem**
+  - asocia pedido al usuario autenticado
+  - limpia carrito al confirmar
 
----
-
-# 🎯 Objetivo del Módulo 7
-
-Implementar un módulo de administración de productos que permita:
-
-* ✅ Uso completo de **Django ORM**
-* ✅ Modelado de entidades del dominio
-* ✅ Relaciones entre modelos (Producto–Categoría)
-* ✅ Migraciones aplicadas correctamente
-* ✅ CRUD completo funcional
-* ✅ Integración de modelos con vistas y templates
-* ✅ Registro del modelo en Django Admin
-* ✅ Sistema de mensajes para feedback al usuario
-
----
-
-# 🏗️ Modelo de Datos Implementado
-
-## 📂 Categoria
-
-```python
-class Categoria(models.Model):
-    nombre = models.CharField(max_length=100, unique=True)
-    descripcion = models.TextField(blank=True)
-```
-
----
-
-## 🛍️ Producto
-
-```python
-class Producto(models.Model):
-    nombre = models.CharField(max_length=120)
-    descripcion = models.TextField(blank=True)
-    categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT)
-    precio = models.DecimalField(...)
-    imagen = models.ImageField(...)
-    activo = models.BooleanField(default=True)
-```
+### Pedidos
+- Vista “Mis pedidos” para clientes autenticados
+- Estados de pedido gestionables desde admin
 
 ---
 
-
-# 🗄️ Motor de Base de Datos
-
-El proyecto utiliza:
-
-**PostgreSQL**
-
-Configurado en `settings.py` mediante:
-
-```python
-ENGINE = 'django.db.backends.postgresql'
-```
----
-## 🔗 Relación ORM Implementada
-
-**Producto → Categoria (ForeignKey real)**
-
-* Relación protegida (`on_delete=PROTECT`)
-* Uso de `related_name`
-* Consultas ORM funcionales
-* Migraciones aplicadas correctamente
-
-
+## Stack técnico
+- **Python**
+- **Django**
+- **PostgreSQL**
+- Django ORM
+- HTML/CSS (estilos propios) + Bootstrap (parcial)
+- Git / GitHub
 
 ---
 
-# 🔁 CRUD Completo de Productos
-
-Se implementó un módulo de administración funcional accesible solo para usuarios `staff`.
-
-## 📌 Rutas Implementadas
-
-| Ruta                     | Funcionalidad        |
-| ------------------------ | -------------------- |
-| `/products/`             | Listado de productos |
-| `/products/create/`      | Crear producto       |
-| `/products/edit/<id>/`   | Editar producto      |
-| `/products/delete/<id>/` | Eliminar producto    |
+## Requisitos
+- Python 3.x
+- PostgreSQL 14+ (recomendado)
+- Git
 
 ---
 
-## ✔ Funcionalidades del CRUD
+## Instalación y ejecución local
 
-* Validación de campos obligatorios
-* Precio validado con `MinValueValidator`
-* Verificación de existencia antes de editar/eliminar
-* Mensajes de éxito y error con `Django messages`
-* Integración completa con templates
-* Uso exclusivo del ORM (sin SQL crudo)
+> Importante: el proyecto Django se ejecuta desde la carpeta `kau/` (ahí vive `manage.py`).
 
-
-
----
-
-# 🛡️ Django Admin Integrado
-
-El modelo `Producto` está registrado en el panel administrativo de Django:
-
-```
-/admin/
-```
-
-Desde allí se pueden:
-
-* Crear productos
-* Editar productos
-* Filtrar por categoría
-* Activar/desactivar productos
-
-
-
----
-
-# 🛒 Funcionalidades Complementarias del Proyecto
-
-Aunque el foco del Módulo 7 es la administración de productos, el sistema incluye:
-
-* 🔐 Autenticación completa (login / registro / logout)
-* 👥 Roles diferenciados (Usuario / Staff)
-* 🛒 Carrito persistente por sesión
-* 📦 Sistema de pedidos asociado a usuario autenticado
-* 🎨 Interfaz personalizada y responsive
-
-
-
----
-
-# 🛠️ Instalación del Proyecto
-
-## 1️⃣ Clonar repositorio
-
+### 1) Clonar repositorio
 ```bash
 git clone https://github.com/xgarridoig-jpg/kau-del-viento.git
 cd kau-del-viento
 ```
 
----
+### 2) Crear y activar entorno virtual
 
-## 2️⃣ Crear entorno virtual
-
-### Windows
+**Windows (PowerShell)**
 
 ```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
-### Mac / Linux
+**macOS / Linux**
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
----
-
-## 3️⃣ Instalar dependencias
+### 3) Instalar dependencias
 
 ```bash
+cd kau
 pip install -r requirements.txt
 ```
 
----
+### 4) Configurar base de datos PostgreSQL
 
-## 4️⃣ Aplicar migraciones
+Crea una base de datos y un usuario en PostgreSQL (ejemplo):
+
+* DB: `kau_del_viento`
+* USER: `kau_user`
+* PASSWORD: (la que definas)
+* HOST: `localhost`
+* PORT: `5432`
+
+Luego ajusta la configuración en `kau/settings.py` (bloque `DATABASES`) si tu entorno usa otros valores.
+
+### 5) Migraciones
 
 ```bash
+python manage.py makemigrations
 python manage.py migrate
 ```
 
----
-
-## 5️⃣ Crear superusuario
+### 6) Crear usuario administrador (si no existe)
 
 ```bash
 python manage.py createsuperuser
 ```
 
----
-
-## 6️⃣ Ejecutar servidor
+### 7) Ejecutar servidor
 
 ```bash
 python manage.py runserver
 ```
 
-Ir a:
+App disponible en:
 
-👉 [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
-
----
-
-# 📸 Evidencias 
-
-Se incluyen capturas de:
-
-1️⃣ Evidencia: Listado de productos (CRUD – READ)
-
-![Listado](kau/docs/01_listado_productos.png)
-
-2️⃣ Evidencia: Crear producto (CREATE)
-
-![Create](kau/docs/02_crear_producto_1.png)
-![Create](kau/docs/02_crear_producto_2.png)
-
-3️⃣ Evidencia: Editar producto (UPDATE)
-
-![Update](kau/docs/03_editar_producto_1.png)
-![Update](kau/docs/03_editar_producto_2.png)
-
-4️⃣ Evidencia: Eliminar producto (DELETE)
-
-![Delete](kau/docs/04_eliminar_producto_1.png)
-![Delete](kau/docs/04_eliminar_producto_2.png)
-
-5️⃣ Evidencia: Relación Producto – Categoría
-
-![Relacion](kau/docs/05_relacion_producto_categoria.png)
-
-6️⃣ Evidencia: Django Admin
-
-![Admin](kau/docs/06_django_admin.png)
-
-7️⃣ Evidencia: Migraciones aplicadas
-
-![Migraciones](kau/docs/07_migraciones.png)
-
-
-# 🏁 Conclusión Académica
-
-El proyecto cumple con los requerimientos del **Módulo 7 – Acceso a Datos en Django**, implementando correctamente:
-
-* Arquitectura MVT
-* ORM de Django
-* Relaciones entre modelos
-* Migraciones funcionales
-* CRUD completo
-* Integración con vistas y templates
-* Administración desde Django Admin
-
-Representa la evolución de un sistema e-commerce básico hacia una aplicación con gestión estructurada de datos utilizando buenas prácticas del framework.
+* [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
 ---
 
-**Desarrollado por:** Ximena Garrido
-Bootcamp Full Stack Python
-Módulo 7 – Acceso a Datos en Django 🚀
+## Rutas principales
+
+### Público
+
+* `/` → Home (catálogo público en sección colección)
+* `/contacto/` → Contacto
+
+### Autenticación
+
+* `/accounts/signup/` → Registro
+* `/accounts/login/` → Login
+* `/accounts/logout/` → Logout
+
+### Carrito y compra
+
+* `/cart/` → Carrito (Tu Kau)
+* `/orders/checkout/` → Checkout (requiere login)
+* `/orders/success/<order_id>/` → Confirmación (requiere login, acceso restringido por usuario)
+* `/orders/mis-pedidos/` → Historial del usuario
+
+### Administración (solo staff)
+
+* `/products/` → Listado de productos (admin)
+* `/products/create/` → Crear producto
+* `/products/edit/<id>/` → Editar producto
+* `/products/delete/<id>/` → Eliminar producto
+* `/admin/` → Admin Django (gestión completa)
+
+---
+
+## Credenciales de prueba
+
+> Para evaluación/demostración se recomienda mantener **1 ADMIN** y **1 CLIENTE** listos.
+
+### Administrador (staff)
+
+* usuario: `admin`
+* contraseña: `admin123`
+
+### Cliente
+
+* usuario: `cliente_test`
+* contraseña: `Pass1234`
+
+Si en tu entorno no existen, créalos desde:
+
+* `/admin/` (como superuser) o
+* `python manage.py createsuperuser` (para admin)
+
+---
+
+## Evidencias
+
+Capturas del flujo principal y administración en:
+
+* `kau/docs/`
+
+Sugeridas:
+
+* Home / catálogo
+* Carrito (Tu Kau)
+* Checkout / confirmación
+* Administración de productos (CRUD)
+* Pedidos (admin / mis pedidos)
+
+---
+
+## Nota de seguridad (entorno local)
+
+Este repositorio está pensado para ejecución local y demostración.
+Para despliegue productivo se recomienda:
+
+* `DEBUG=False`
+* variables de entorno para secretos
+* `ALLOWED_HOSTS` configurado
+* almacenamiento de media separado
+
+---
+
+## Proyección del proyecto
+
+La estructura actual permite extender el sistema hacia funcionalidades como:
+
+* gestión de inventario (stock por producto) y disponibilidad
+* catálogo con búsqueda avanzada y filtros por rango de precio
+* cupones y reglas de descuento (por categoría o por total de compra)
+* seguimiento de pedidos (tracking) y notificaciones por correo
+* reportes administrativos (ventas por periodo, productos más vendidos)
+
+---
+
+## Autora
+
+**Ximena Garrido** — Backend Developer
+
+Portafolio: [https://xgarridoig-jpg.github.io/](https://xgarridoig-jpg.github.io/)
+LinkedIn: [https://www.linkedin.com/in/xpgarrido/](https://www.linkedin.com/in/xpgarrido/)
+
