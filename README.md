@@ -264,8 +264,6 @@ Si en tu entorno no existen, créalos desde:
 
 ## Nota de seguridad (entorno local)
 
-## Nota (ejecución local)
-
 El proyecto está configurado para ejecutarse en local.  
 Si se despliega en un servidor, se recomienda desactivar `DEBUG`, configurar `ALLOWED_HOSTS` y gestionar **credenciales** y **archivos subidos (media)** de forma segura.
 
